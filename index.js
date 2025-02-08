@@ -24,7 +24,9 @@ let ctx = canvas.getContext("2d");
     ctx.stroke();
 
     let x = 100; //starting point
-    let dx = 1; //velocity;
+    let y = 100;
+    let dx = 4; //velocity;
+    let dy = 4;
     radius = 30;
     //animation
     function animate() {
@@ -32,16 +34,21 @@ let ctx = canvas.getContext("2d");
         ctx.clearRect(0, 0, innerWidth, innerHeight);
 
         ctx.beginPath();
-        ctx.arc(x, 100, 30, 0, Math.PI * 2, false);
+        ctx.arc(x, y, radius, 0, Math.PI * 2, false);
         ctx.strokeStyle = "green";
         ctx.stroke();
 
         x += dx;
+        y += dy;
 
         //basic collision
-        if(x > innerWidth) {
-            
+        if (x + radius > innerWidth || x - radius < 0) {
+            dx = -dx;
+        } 
+        if (y + radius > innerHeight || y - radius < 0) {
+            dy = -dy;
         }
+
 
     }
 
