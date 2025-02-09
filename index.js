@@ -6,23 +6,23 @@ canvas.height = window.innerHeight;
 let ctx = canvas.getContext("2d");
 // console.log(ctx);
 
-//first circle
+//first circle, good circle
 // ctx.beginPath();
 // ctx.arc(100, 100, 30, 0, Math.PI * 2, false);
 // ctx.strokeStyle = "green";
 // ctx.stroke();
 
-
-
-//object oriented js
+//class helps streamline the proccess of making however many circles i want
 class Circle {
     constructor(x, y, dx, dy, radius) {
         this.x = x;
         this.y = y;
-        this.dx = dx;
+        this.dx = dx; //dx dy represents velocity
         this.dy = dy;
         this.radius = radius;
     }
+
+    //these methods will draw and increment each circle's position
     drawCircle() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
@@ -42,73 +42,43 @@ class Circle {
     }
 }
 
-//random starting points
-let x = Math.random() * innerWidth; //starting point
-let y = Math.random() * innerHeight;
-let dx = (Math.random() - 0.5) * 10; //velocity;
-let dy = (Math.random() - 0.5) * 10;
-radius = 30;
 
 
-
-
-
-
+//circles info will be stored in an array 
 let generatedCircles = [];
 
-for(let i = 0; i < 20; i++) {
-    //random starting points
-    let x = Math.random() * innerWidth; //starting point
-    let y = Math.random() * innerHeight;
-    let dx = (Math.random() - 0.5) * 10; //velocity;
-    let dy = (Math.random() - 0.5) * 10;
+//loop iterates how many circles i want to spawn
+for(let i = 0; i < 100; i++) {
     radius = 30;
+
+    //random starting points
+    //math ensures the center of the circle is (radius) away from borders
+    let x = Math.random() * (innerWidth - (radius * 2)) + radius; 
+    let y = Math.random() * (innerHeight - (radius * 2)) + radius;
+    //random velocity
+    let dx = (Math.random() - 0.5) * 5;
+    let dy = (Math.random() - 0.5) * 5;
+    //new circle with fresh coordinates and velocity
     let circle = new Circle(x, y, dx, dy, radius);
+
+    //circle added to the array 
     generatedCircles.push(circle);
 }
+
 console.log(generatedCircles);
+
 
 //animation
 function animate() {
     requestAnimationFrame(animate);
     ctx.clearRect(0, 0, innerWidth, innerHeight);
     
-    
+    //for every circle that is stored in the array, execute updateCircle()
     generatedCircles.forEach((e) => {
         e.updateCircle();
     })
     
-
-
-
-    // x += dx;
-    // y += dy;
-    
-    // //basic collision
-    // if(x + radius > innerWidth || x - radius < 0) {
-    //     dx = -dx;
-    // } 
-    // if(y + radius > innerHeight || y - radius < 0) {
-    //     dy = -dy;
-    // }
-    
-    
 }
 
 
-
-
 animate();
-
-
-
-
-//random circles
-// for(i = 0; i < 20; i++) {
-    //     let x = Math.random() * window.innerWidth;
-    //     let y = Math.random() * window.innerHeight;
-    //     ctx.beginPath();
-    //     ctx.arc(x, y, 30, 0, Math.PI * 2, false);
-    //     ctx.strokeStyle = "green";
-    //     ctx.stroke();
-    // }
